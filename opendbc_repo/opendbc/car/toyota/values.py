@@ -77,6 +77,7 @@ class ToyotaFlags(IntFlag):
   SECOC = 2048
 
   ALKA = 2 ** 12
+  RADAR_FILTER = 2 ** 13
 
 class Footnote(Enum):
   CAMRY = CarFootnote(

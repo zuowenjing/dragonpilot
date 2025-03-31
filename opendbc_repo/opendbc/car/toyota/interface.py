@@ -118,6 +118,14 @@ class CarInterface(CarInterfaceBase):
       if experimental_long and candidate in RADAR_ACC_CAR:
         ret.flags |= ToyotaFlags.DISABLE_RADAR.value
 
+      # RADAR_ACC_CAR = CHR TSS2 / RAV4 TSS2
+      # NO_DSU_CAR = CAMRY / CHR
+      if experimental_long and (0x2FF in fingerprint[0] or 0x2AA in fingerprint[0]):
+        print("----------------------------------------------")
+        print("dragonpilot: RADAR_FILTER detected!")
+        print("----------------------------------------------")
+        ret.flags |= ToyotaFlags.RADAR_FILTER.value
+
     # openpilot longitudinal enabled by default:
     #  - cars w/ DSU disconnected
     #  - TSS2 cars with camera sending ACC_CONTROL where we can block it
@@ -156,6 +164,6 @@ class CarInterface(CarInterfaceBase):
   @staticmethod
   def init(CP, can_recv, can_send):
     # disable radar if alpha longitudinal toggled on radar-ACC car
-    if CP.flags & ToyotaFlags.DISABLE_RADAR.value:
+    if not CP.flags & ToyotaFlags.RADAR_FILTER.value and CP.flags & ToyotaFlags.DISABLE_RADAR.value:
       communication_control = bytes([uds.SERVICE_TYPE.COMMUNICATION_CONTROL, uds.CONTROL_TYPE.ENABLE_RX_DISABLE_TX, uds.MESSAGE_TYPE.NORMAL])
       disable_ecu(can_recv, can_send, bus=0, addr=0x750, sub_addr=0xf, com_cont_req=communication_control)
