@@ -172,6 +172,9 @@ class CarController(CarControllerBase):
       # pcm entered standstill or it's disabled
       self.standstill_req = False
 
+    if (self.CP.flags & ToyotaFlags.TSS1_SNG.value) and CS.out.standstill and not self.last_standstill:
+      self.standstill_req = False
+
     self.last_standstill = CS.out.standstill
 
     # handle UI messages

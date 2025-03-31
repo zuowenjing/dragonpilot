@@ -126,4 +126,5 @@ inline static std::unordered_map<std::string, uint32_t> keys = {
     {"dp_general_hide_hud_speed_kph", PERSISTENT},
     {"dp_lon_ext_radar", PERSISTENT},
     {"dp_lat_road_edge_detection", PERSISTENT},
+    {"dp_toyota_tss1_sng", PERSISTENT},
 };

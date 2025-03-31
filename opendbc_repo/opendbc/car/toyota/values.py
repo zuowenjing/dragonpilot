@@ -77,6 +77,7 @@ class ToyotaFlags(IntFlag):
   SECOC = 2048
 
   ALKA = 2 ** 12
+  TSS1_SNG = 2 ** 13
 
 class Footnote(Enum):
   CAMRY = CarFootnote(

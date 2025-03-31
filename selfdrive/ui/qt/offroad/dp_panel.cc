@@ -105,6 +105,11 @@ void DPPanel::add_toyota_toggles() {
       QString::fromUtf8("🐉 ") + tr("Toyota / Lexus"),
       "",
     },
+    {
+      "dp_toyota_tss1_sng",
+      tr("Enable TSS1 SnG Mod"),
+      "",
+    },
   };
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {
