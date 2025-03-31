@@ -22,4 +22,5 @@ CarParamsT = capnp.lib.capnp._StructModule
 class DPFlags:
   LateralALKA = 1
   ExtRadar = 2
+  ToyotaDoorAutoLockUnlock = 2 ** 2
   pass

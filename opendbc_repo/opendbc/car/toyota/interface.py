@@ -151,6 +151,9 @@ class CarInterface(CarInterfaceBase):
       if ret.flags & ToyotaFlags.HYBRID.value:
         ret.longitudinalActuatorDelay = 0.05
 
+    if dp_params & structs.DPFlags.ToyotaDoorAutoLockUnlock:
+      ret.flags |= ToyotaFlags.DOOR_AUTO_LOCK_UNLOCK.value
+
     return ret
 
   @staticmethod
