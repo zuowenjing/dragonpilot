@@ -16,6 +16,7 @@
 #include "selfdrive/ui/qt/offroad/developer_panel.h"
 #include "selfdrive/ui/qt/offroad/firehose.h"
 #include "selfdrive/ui/qt/offroad/dp_panel.h"
+#include "selfdrive/ui/qt/offroad/model_selector.h"
 
 TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
   // param, title, desc, icon
@@ -439,7 +440,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
 
   sidebar_widget->setFixedWidth(500);
   main_layout->addWidget(sidebar_widget);
-  main_layout->addWidget(panel_widget);
+  main_layout->addWidget(new ModelSelector(panel_widget, this));
 
   setStyleSheet(R"(
     * {
