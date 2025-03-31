@@ -65,6 +65,8 @@ static void update_state(UIState *s) {
 void ui_update_params(UIState *s) {
   auto params = Params();
   s->scene.is_metric = params.getBool("IsMetric");
+  // display mode
+  s->scene.display_mode = std::atoi(params.get("dp_general_display_mode").c_str());
 }
 
 void UIState::updateStatus() {
@@ -172,6 +174,62 @@ void Device::updateBrightness(const UIState &s) {
   }
 }
 
+// Display Mode
+// 0 Std. - Stock behavior.
+// 1 MAIN+ - ACC MAIN on = Display ON
+// 2 OP+ - OP enabled = Display ON
+// 3 MAIN- - ACC MAIN on = Display OFF
+// 4 OP- - OP enabled = Display OFF
+bool Device::applyDisplayMode(const UIState &s, int timeout) {
+  // standard
+  if (s.scene.display_mode == 0 || !s.scene.ignition) {
+    return (s.scene.ignition || timeout > 0);
+  }
+
+  bool cruise_available = false;
+  bool cruise_enabled = false;
+
+  auto &sm = *(s.sm);
+  if (sm.updated("carState")) {
+    auto cs = sm["carState"].getCarState().getCruiseState();
+    cruise_available = cs.getAvailable();
+    cruise_enabled = cs.getEnabled();
+  }
+
+  if (sm["selfdriveState"].getSelfdriveState().getAlertSize() != cereal::SelfdriveState::AlertSize::NONE) {
+    resetInteractiveTimeout(5);
+    return true;
+  }
+
+  // 1 MAIN+ - ACC MAIN on = Display ON
+  if (s.scene.display_mode == 1 && cruise_available) {
+    return s.scene.ignition;
+  }
+
+  // 2 OP+ - OP enabled = Display ON
+  if (s.scene.display_mode == 2 && cruise_enabled) {
+    return s.scene.ignition;
+  }
+
+  // 3 MAIN- - ACC MAIN on = Display OFF
+  if (s.scene.display_mode == 3 && cruise_available) {
+    return false;
+  }
+
+  // 4 OP- - OP enabled = Display OFF
+  if (s.scene.display_mode == 4 && cruise_enabled) {
+    return false;
+  }
+
+  if (s.scene.display_mode >= 3) {
+    // 3,4
+    return s.scene.ignition;
+  } else {
+    // 1,2
+    return false;
+  }
+}
+
 void Device::updateWakefulness(const UIState &s) {
   bool ignition_just_turned_off = !s.scene.ignition && ignition_on;
   ignition_on = s.scene.ignition;
@@ -182,7 +240,7 @@ void Device::updateWakefulness(const UIState &s) {
     emit interactiveTimeout();
   }
 
-  setAwake(s.scene.ignition || interactive_timeout > 0);
+  setAwake(applyDisplayMode(s, interactive_timeout));
 }
 
 UIState *uiState() {

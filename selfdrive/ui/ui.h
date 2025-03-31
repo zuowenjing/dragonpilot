@@ -60,6 +60,7 @@ typedef struct UIScene {
   float light_sensor = -1;
   bool started, ignition, is_metric;
   uint64_t started_frame;
+  int display_mode;
 } UIScene;
 
 class UIState : public QObject {
@@ -113,6 +114,7 @@ private:
   FirstOrderFilter brightness_filter;
   QFuture<void> brightness_future;
 
+  bool applyDisplayMode(const UIState &s, int timeout);
   void updateBrightness(const UIState &s);
   void updateWakefulness(const UIState &s);
   void setAwake(bool on);
