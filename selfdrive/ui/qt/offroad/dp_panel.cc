@@ -54,6 +54,11 @@ void DPPanel::add_longitudinal_toggles() {
       QString::fromUtf8("🐉 ") + tr("Longitudinal Ctrl"),
       "",
     },
+    {
+      "dp_lon_ext_radar",
+      tr("Use External Radar"),
+      tr("See https://github.com/eFiniLan/openpilot-ext-radar-addon for more information."),
+    },
   };
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {
@@ -106,6 +111,11 @@ void DPPanel::add_vag_toggles() {
       auto label = new LabelControl(title, "");
       addItem(label);
       continue;
+    }
+    if (param == "dp_lon_ext_radar") {
+      if (!vehicle_has_radar_unavailable || !vehicle_has_long_ctrl) {
+        continue;
+      }
     }
     auto toggle = new ParamControl(param, title, desc, "", this);
 

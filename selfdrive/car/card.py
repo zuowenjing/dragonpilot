@@ -109,6 +109,10 @@ class Car:
       self.CI, self.CP = CI, CI.CP
       self.RI = RI
 
+    if self.params.get_bool("dp_lon_ext_radar"):
+      from opendbc.car.radar_interface import RadarInterface
+      self.RI = RadarInterface(self.CI.CP)
+
     # set alternative experiences from parameters
     disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
     self.CP.alternativeExperience = 0
