@@ -38,7 +38,7 @@ class Controls:
     self.sm = messaging.SubMaster(['liveParameters', 'liveTorqueParameters', 'modelV2', 'selfdriveState',
                                    'liveCalibration', 'livePose', 'longitudinalPlan', 'carState', 'carOutput',
                                    'driverMonitoringState', 'onroadEvents', 'driverAssistance'], poll='selfdriveState')
-    self.pm = messaging.PubMaster(['carControl', 'controlsState'])
+    self.pm = messaging.PubMaster(['carControl', 'controlsState', 'dpControlsState'])
 
     self.steer_limited_by_controls = False
     self.desired_curvature = 0.0
@@ -55,6 +55,9 @@ class Controls:
       self.LaC = LatControlPID(self.CP, self.CI)
     elif self.CP.lateralTuning.which() == 'torque':
       self.LaC = LatControlTorque(self.CP, self.CI)
+
+    self.alka_enabled = self.params.get_bool("dp_lat_alka")
+    self.alka_active = False
 
   def update(self):
     self.sm.update(15)
@@ -88,7 +91,9 @@ class Controls:
 
     # Check which actuators can be enabled
     standstill = abs(CS.vEgo) <= max(self.CP.minSteerSpeed, MIN_LATERAL_CONTROL_SPEED) or CS.standstill
-    CC.latActive = self.sm['selfdriveState'].active and not CS.steerFaultTemporary and not CS.steerFaultPermanent and not standstill
+    self.alka_active = self.alka_enabled and CS.cruiseState.available and not standstill and CS.gearShifter != car.CarState.GearShifter.reverse
+    lat_active = self.sm['selfdriveState'].active or self.alka_active
+    CC.latActive = lat_active and not CS.steerFaultTemporary and not CS.steerFaultPermanent and not standstill
     CC.longActive = CC.enabled and not any(e.overrideLongitudinal for e in self.sm['onroadEvents']) and self.CP.openpilotLongitudinalControl
 
     actuators = CC.actuators
@@ -168,6 +173,13 @@ class Controls:
 
     # TODO: both controlsState and carControl valids should be set by
     #       sm.all_checks(), but this creates a circular dependency
+
+    # dpControlsState
+    dat = messaging.new_message('dpControlsState')
+    dat.valid = True
+    ncs = dat.dpControlsState
+    ncs.alkaActive = self.alka_active
+    self.pm.send('dpControlsState', dat)
 
     # controlsState
     dat = messaging.new_message('controlsState')

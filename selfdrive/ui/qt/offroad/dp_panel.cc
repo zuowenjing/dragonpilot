@@ -31,6 +31,11 @@ void DPPanel::add_lateral_toggles() {
       QString::fromUtf8("🐉 ") + tr("Lateral Ctrl"),
       "",
     },
+    {
+      "dp_lat_alka",
+      tr("Enable Always-on Lane Keeping Assist"),
+      "",
+    },
   };
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {

@@ -99,6 +99,9 @@ class Car:
         with car.CarParams.from_bytes(cached_params_raw) as _cached_params:
           cached_params = _cached_params
 
+      if self.params.get_bool("dp_lat_alka"):
+        dp_params |= structs.DPFlags.LateralALKA
+
       self.CI = get_car(*self.can_callbacks, obd_callback(self.params), experimental_long_allowed, num_pandas, dp_params, cached_params)
       self.RI = interfaces[self.CI.CP.carFingerprint].RadarInterface(self.CI.CP)
       self.CP = self.CI.CP
@@ -114,6 +117,9 @@ class Car:
     self.CP.alternativeExperience = 0
     if not disengage_on_accelerator:
       self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.DISABLE_DISENGAGE_ON_GAS
+
+    if dp_params & structs.DPFlags.LateralALKA:
+      self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.ALKA
 
     openpilot_enabled_toggle = self.params.get_bool("OpenpilotEnabledToggle")
 
