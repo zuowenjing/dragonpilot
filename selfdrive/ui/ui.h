@@ -60,6 +60,7 @@ typedef struct UIScene {
   float light_sensor = -1;
   bool started, ignition, is_metric;
   uint64_t started_frame;
+  int dp_general_hide_hud_speed_kph = 0;
 } UIScene;
 
 class UIState : public QObject {

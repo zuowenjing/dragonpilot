@@ -65,6 +65,7 @@ static void update_state(UIState *s) {
 void ui_update_params(UIState *s) {
   auto params = Params();
   s->scene.is_metric = params.getBool("IsMetric");
+  s->scene.dp_general_hide_hud_speed_kph = std::atoi(params.get("dp_general_hide_hud_speed_kph").c_str());
 }
 
 void UIState::updateStatus() {

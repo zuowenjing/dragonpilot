@@ -9,10 +9,12 @@ void DPPanel::add_general_toggles() {
       "",
     },
   };
+  auto hide_hud = new ParamSpinBoxControl("dp_general_hide_hud_speed_kph", tr("Hide HUD When Moves above:"), tr("To prevent screen burn-in, hide Speed, MAX Speed, and Steering/DM Icons when the car moves.\nOff = Stock Behavior\n1 km/h ≈ 0.6 mph"), "", 0, 120, 5, tr(" km/h"), tr("Off"));
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {
       auto label = new LabelControl(title, "");
       addItem(label);
+      addItem(hide_hud);
       continue;
     }
     auto toggle = new ParamControl(param, title, desc, "", this);
