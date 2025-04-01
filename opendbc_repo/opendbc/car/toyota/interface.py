@@ -179,6 +179,12 @@ class CarInterface(CarInterfaceBase):
     if dp_params & structs.DPFlags.ToyotaTSS1SnG:
       ret.flags |= ToyotaFlags.TSS1_SNG.value
 
+    if 0x23 in fingerprint[0]:
+      ret.flags |= ToyotaFlags.ZSS.value
+      print("----------------------------------------------")
+      print("dragonpilot: ZSS detected!")
+      print("----------------------------------------------")
+
     return ret
 
   @staticmethod
