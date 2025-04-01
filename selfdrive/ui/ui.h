@@ -63,6 +63,7 @@ typedef struct UIScene {
   bool started, ignition, is_metric, alka_active;
   uint64_t started_frame;
   int display_mode;
+  int dp_general_hide_hud_speed_kph = 0;
 } UIScene;
 
 class UIState : public QObject {

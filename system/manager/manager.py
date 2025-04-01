@@ -46,6 +46,7 @@ def manager_init() -> None:
     ("dp_general_model_selected", ""),
     ("dp_general_model_list", ""),
     ("dp_lat_lca_speed", "20"),
+    ("dp_general_hide_hud_speed_kph", "0"),
   ]
 
   if params.get_bool("RecordFrontLock"):
