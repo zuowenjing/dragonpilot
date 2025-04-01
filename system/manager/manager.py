@@ -43,6 +43,8 @@ def manager_init() -> None:
     ("DisableLogging", "0"),
     ("dp_lat_alka", "0"),
     ("dp_general_display_mode", "0"),
+    ("dp_general_model_selected", ""),
+    ("dp_general_model_list", ""),
   ]
 
   if params.get_bool("RecordFrontLock"):

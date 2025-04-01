@@ -77,6 +77,24 @@ function launch {
   # write tmux scrollback to a file
   tmux capture-pane -pq -S-1000 > /tmp/launch_log
 
+  ./scripts/model_list.py
+  PARAM_FILES=(
+      "/data/params/d/dp_general_model_selected"
+      "$HOME/.comma/params/d/dp_general_model_selected"
+  )
+  for PARAM_FILE in "${PARAM_FILES[@]}"; do
+    if [ -s "$PARAM_FILE" ]; then
+      fingerprint=$(cat "$PARAM_FILE")
+      # Ensure fingerprint is not empty
+      if [ -n "$fingerprint" ]; then
+        echo "Fingerprint set to ${fingerprint}"
+        export FINGERPRINT="${fingerprint}"
+        export SKIP_FW_QUERY="1"
+        break  # Stop checking once a valid file is found
+      fi
+    fi
+  done
+
   # start manager
   cd system/manager
   if [ ! -f $DIR/prebuilt ]; then

@@ -119,4 +119,6 @@ inline static std::unordered_map<std::string, uint32_t> keys = {
     {"Version", PERSISTENT},
     {"dp_lat_alka", PERSISTENT},
     {"dp_general_display_mode", PERSISTENT},
+    {"dp_general_model_selected", PERSISTENT},
+    {"dp_general_model_list", PERSISTENT},
 };
