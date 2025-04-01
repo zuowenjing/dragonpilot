@@ -79,6 +79,7 @@ class ToyotaFlags(IntFlag):
   ALKA = 2 ** 12
   DOOR_AUTO_LOCK_UNLOCK = 2 ** 13
   TSS1_SNG = 2 ** 14
+  RADAR_FILTER = 2 ** 15
 
 class Footnote(Enum):
   CAMRY = CarFootnote(
