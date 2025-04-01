@@ -45,6 +45,11 @@ void DPPanel::add_lateral_toggles() {
       tr("Enable Always-on Lane Keeping Assist"),
       "",
     },
+    {
+      "dp_lat_road_edge_detection",
+      tr("Road Edge Detection"),
+      tr("Block lane change assist when the system detects the road edge.")
+    },
   };
 
   auto lca_speed_toggle = new ParamSpinBoxControl("dp_lat_lca_speed", tr("LCA Speed:"), tr("Off = Disable LCA\n1 mph ≈ 1.2 km/h"), "", 0, 100, 5, tr(" mph"), tr("Off"));
