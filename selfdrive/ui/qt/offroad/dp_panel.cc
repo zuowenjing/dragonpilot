@@ -115,6 +115,11 @@ void DPPanel::add_toyota_toggles() {
       tr("Enable TSS1 SnG Mod"),
       "",
     },
+    {
+      "dp_toyota_stock_lon",
+      tr("Use Stock Longitudinal Control"),
+      "",
+    },
   };
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {

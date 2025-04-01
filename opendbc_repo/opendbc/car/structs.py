@@ -24,4 +24,5 @@ class DPFlags:
   ExtRadar = 2
   ToyotaDoorAutoLockUnlock = 2 ** 2
   ToyotaTSS1SnG = 2 ** 3
+  ToyotaStockLon = 2 ** 4
   pass
