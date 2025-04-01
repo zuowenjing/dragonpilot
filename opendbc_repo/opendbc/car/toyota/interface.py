@@ -151,6 +151,10 @@ class CarInterface(CarInterfaceBase):
       if ret.flags & ToyotaFlags.HYBRID.value:
         ret.longitudinalActuatorDelay = 0.05
 
+    if dp_params & structs.DPFlags.ToyotaStockLon:
+      ret.openpilotLongitudinalControl = False
+      ret.experimentalLongitudinalAvailable = False
+
     return ret
 
   @staticmethod

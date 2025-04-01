@@ -105,6 +105,11 @@ void DPPanel::add_toyota_toggles() {
       QString::fromUtf8("🐉 ") + tr("Toyota / Lexus"),
       "",
     },
+    {
+      "dp_toyota_stock_lon",
+      tr("Use Stock Longitudinal Control"),
+      "",
+    },
   };
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {

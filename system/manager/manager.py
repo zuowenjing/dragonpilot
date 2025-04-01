@@ -49,6 +49,7 @@ def manager_init() -> None:
     ("dp_general_hide_hud_speed_kph", "0"),
     ("dp_lon_ext_radar", "0"),
     ("dp_lat_road_edge_detection", "0"),
+    ("dp_toyota_stock_lon", "0"),
   ]
 
   if params.get_bool("RecordFrontLock"):
