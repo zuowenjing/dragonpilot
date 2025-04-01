@@ -25,4 +25,5 @@ class DPFlags:
   ToyotaDoorAutoLockUnlock = 2 ** 2
   ToyotaTSS1SnG = 2 ** 3
   ToyotaStockLon = 2 ** 4
+  VagA0SnG = 2 ** 5
   pass

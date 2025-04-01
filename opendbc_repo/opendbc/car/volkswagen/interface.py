@@ -87,4 +87,7 @@ class CarInterface(CarInterfaceBase):
     ret.vEgoStopping = 0.5
     ret.autoResumeSng = ret.minEnableSpeed == -1
 
+    if dp_params & structs.DPFlags.VagA0SnG:
+      ret.flags |= VolkswagenFlags.A0SnG.value
+
     return ret
