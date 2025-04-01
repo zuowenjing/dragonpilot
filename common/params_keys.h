@@ -118,4 +118,5 @@ inline static std::unordered_map<std::string, uint32_t> keys = {
     {"UpdaterLastFetchTime", PERSISTENT},
     {"Version", PERSISTENT},
     {"dp_lat_alka", PERSISTENT},
+    {"dp_general_display_mode", PERSISTENT},
 };

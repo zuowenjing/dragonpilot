@@ -42,6 +42,7 @@ def manager_init() -> None:
     ("LongitudinalPersonality", str(log.LongitudinalPersonality.standard)),
     ("DisableLogging", "0"),
     ("dp_lat_alka", "0"),
+    ("dp_general_display_mode", "0"),
   ]
 
   if params.get_bool("RecordFrontLock"):
