@@ -44,10 +44,14 @@ void DPPanel::add_lateral_toggles() {
       "",
     },
   };
+
+  auto lca_speed_toggle = new ParamSpinBoxControl("dp_lat_lca_speed", tr("LCA Speed:"), tr("Off = Disable LCA\n1 mph ≈ 1.2 km/h"), "", 0, 100, 5, tr(" mph"), tr("Off"));
+
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {
       auto label = new LabelControl(title, "");
       addItem(label);
+      addItem(lca_speed_toggle);
       continue;
     }
     auto toggle = new ParamControl(param, title, desc, "", this);
