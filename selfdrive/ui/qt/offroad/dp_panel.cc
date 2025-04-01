@@ -31,6 +31,11 @@ void DPPanel::add_lateral_toggles() {
       QString::fromUtf8("🐉 ") + tr("Lateral Ctrl"),
       "",
     },
+    {
+      "dp_lat_road_edge_detection",
+      tr("Road Edge Detection"),
+      tr("Block lane change assist when the system detects the road edge.")
+    },
   };
   for (auto &[param, title, desc] : toggle_defs) {
     if (param == "") {
