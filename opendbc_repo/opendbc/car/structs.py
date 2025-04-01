@@ -23,4 +23,5 @@ class DPFlags:
   LateralALKA = 1
   ExtRadar = 2
   ToyotaDoorAutoLockUnlock = 2 ** 2
+  ToyotaTSS1SnG = 2 ** 3
   pass

@@ -154,6 +154,9 @@ class CarInterface(CarInterfaceBase):
     if dp_params & structs.DPFlags.ToyotaDoorAutoLockUnlock:
       ret.flags |= ToyotaFlags.DOOR_AUTO_LOCK_UNLOCK.value
 
+    if dp_params & structs.DPFlags.ToyotaTSS1SnG:
+      ret.flags |= ToyotaFlags.TSS1_SNG.value
+
     return ret
 
   @staticmethod
